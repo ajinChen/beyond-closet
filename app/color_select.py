@@ -1,17 +1,14 @@
 import os
-from skimage import io, transform
+from skimage import io
 import torch
-import torchvision
 from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
-# import torch.optim as optim
 
 import numpy as np
 from PIL import Image
-import glob
 
 from data_loader import RescaleT
 from data_loader import ToTensor
@@ -19,21 +16,16 @@ from data_loader import ToTensorLab
 from data_loader import SalObjDataset
 
 from model import U2NET # full size version 173.6 MB
-#from model import U2NETP # small version u2net 4.7 MB
 
-# normalize the predicted SOD probability map
 
 def normPRED(d):
     ma = torch.max(d)
     mi = torch.min(d)
-
     dn = (d-mi)/(ma-mi)
-
     return dn
 
 
 def mode_color(idx,image,prdimg):
-    
     inarray = io.imread(image[idx])
     prdarray = prdimg[idx]
     inarray_copy =inarray.reshape((-1,3))
@@ -43,22 +35,15 @@ def mode_color(idx,image,prdimg):
     unique, counts = np.unique(temp[tst],axis = 0,return_counts = True)
     idx = np.argmax(counts)
     mode = unique[idx]
-    
     return mode
 
 def get_color(url):
-
     # --------- 1. get image path and name ---------
-    model_name='u2net'#u2netp
-    
+    model_name='u2net'
     # add model path here
     model_dir = os.path.join(os.getcwd(), 'saved_models', model_name, model_name + '.pth')
-
     img_name_list = url
-    print(img_name_list)
-
     # --------- 2. dataloader ---------
-    #1. dataloader
     test_salobj_dataset = SalObjDataset(img_name_list = img_name_list,
                                         lbl_name_list = [],
                                         transform=transforms.Compose([RescaleT(320),
@@ -68,7 +53,6 @@ def get_color(url):
                                         batch_size=1,
                                         shuffle=False,
                                         num_workers=1)
-
     # --------- 3. model define ---------
     if(model_name=='u2net'):
         print("...load U2NET---173.6 MB")
@@ -110,8 +94,6 @@ def get_color(url):
         image = io.imread(img_name)
         imo = im.resize((image.shape[1],image.shape[0]),resample=Image.BILINEAR)
         prediction.append(np.array(imo))
-
-
         del d1,d2,d3,d4,d5,d6,d7
        
     # --------- 5. get colors ---------
