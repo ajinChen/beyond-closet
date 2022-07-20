@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.spatial.distance import cdist
 import matplotlib.pylab as plt
 
 '''
@@ -15,6 +14,7 @@ wheel=[layer1,layer2,layer3,layer4]
 def color_pick_COM(index):
 	return [index-6]
 
+
 def color_pick_ANA(index):
 	if index>=11:
 		return [10, 0, index]
@@ -22,18 +22,23 @@ def color_pick_ANA(index):
 		return [11, 1, index]
 	else:
 		return [index-1, index+1, index]
-	
+
+
 def color_pick_TRI(index):
 	return [index-4, index-8]
+
 
 def color_pick_CD(index):
 	return [index-5, index-7]
 
+
 def color_pick_QUA(index):
 	return [index, index-3, index-6, index-9]
 
+
 def color_pick_TET(index):
 	return [index, index-2, index-6, index-8]
+
 
 def stylist_choose(style, layer, index, result_num):
 	if style=='COM':
@@ -65,7 +70,8 @@ def stylist_choose(style, layer, index, result_num):
 		return [wheel[layer][colors_index[0]], wheel[layer][colors_index[1]], wheel[layer][colors_index[2]], wheel[layer][colors_index[3]]]
 	else:
 		return None
-	
+
+
 def color_rec(color, style, result_num):
 	x = np.array([[color]])
 	y = np.array(wheel)
@@ -76,9 +82,11 @@ def color_rec(color, style, result_num):
 	index=listOfCordinates[1]
 	return stylist_choose(style, layer, index, result_num)
 
+
 def check_wheel(color, style, result_num):
 	RGB=color_output(color, style, result_num)
 	return plt.imshow([RGB])
+
 
 #color_list is a list contains multiple colors, use 3->1 or 2->1
 def color_locate(color_list):
@@ -92,6 +100,7 @@ def color_locate(color_list):
 	if len(color_list)==1:
 		color_ready=color_list[0]
 	return color_ready
+
 
 def color_check_COM(color_list, result_num):
 	input_size=len(color_list)
@@ -108,12 +117,15 @@ def color_check_COM(color_list, result_num):
 def color_check_ANA(color_list, result_num):
 	return color_rec(color_locate(color_list), 'ANA', result_num)
 
-#This is the main function, color list should be a list contains tuples where each one is a RGB tuple. output is also a list of tuples, each tuple is a recommended color
+
+# This is the main function, color list should be a list contains tuples where each one is a RGB tuple.
+# Output is also a list of tuples, each tuple is a recommended color
 def color_output(color_list, style, result_num):
 	if style=='COM':
 		return color_check_COM(color_list, result_num)
 	if style=='ANA':
 		return color_check_ANA(color_list, result_num)
+
 
 def convert(RGB):
 	return tuple(i for i in list(RGB))
