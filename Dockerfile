@@ -22,5 +22,4 @@ COPY ./app .
 EXPOSE 5000
 
 # configure the container to run in an executed manner
-
 CMD ["python3", "app.py" ]
