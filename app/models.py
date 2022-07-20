@@ -4,8 +4,8 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import PasswordField, StringField, SubmitField, SelectMultipleField, SelectField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -65,16 +65,3 @@ class LogInForm(FlaskForm):
     username = StringField('Username:', validators=[DataRequired()])
     password = PasswordField('Password:', validators=[DataRequired()])
     submit = SubmitField('Login')
-
-
-# class MultiCheckboxField(SelectMultipleField):
-#     widget = widgets.ListWidget(prefix_label=False)
-#     option_widget = widgets.CheckboxInput()
-#
-#
-# class SimpleForm(FlaskForm):
-#     string_of_files = ['one\r\ntwo\r\nthree\r\n']
-#     list_of_files = string_of_files[0].split()
-#     # create a list of value/description tuples
-#     files = [(x, x) for x in list_of_files]
-#     example = MultiCheckboxField('Label', choices=[False, True])

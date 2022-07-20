@@ -1,19 +1,16 @@
 import os
 from flask import render_template, redirect, url_for, flash, session, request
 from flask_login import current_user, login_user, login_required, logout_user
-from werkzeug.utils import secure_filename
 
 # built-in
-from models import Customer, RegisterTime, RegistrationForm, LogInForm, UploadForm
+from models import Customer, RegisterTime, RegistrationForm, LogInForm
+from utils import upload_clothing_jpeg_to_s3
 from connection import commit_tables
-from __init__ import app, db, login_manager, team_members_yaml
-import boto3
-import time
+from __init__ import app, db, login_manager, team_members_yaml, s3, bucket_name
 import sys
 
 # data science model
 from combined import cloth_rec
-
 
 # create tables
 commit_tables(db)
@@ -88,7 +85,6 @@ def sign_up():
 @login_required
 # dynamic panel
 def dynamic_tab():
-    user_fileform = UploadForm()
     username = session['messages']
     user_contents = {
         'urls': [],
@@ -110,50 +106,34 @@ def dynamic_tab():
         shirt_image = request.files['shirt_image']
         trousers_image = request.files['trousers_image']
 
-        # upload image and return url
+        # upload image and return aws s3 url
         for item, item_type in zip((coat_image, shirt_image, trousers_image), ('coat', 'shirt', 'trousers')):
             if item:
-                image_url = upload_clothing_jpeg_to_s3(username, item, item_type)
+                image_url = upload_clothing_jpeg_to_s3(s3, bucket_name, username, item, item_type)
                 user_contents['urls'].append(image_url)
                 print(os.getenv('AWS_ACCESS_KEY'), file=sys.stderr)
                 print(os.getenv('AWS_SECRET_ACCESS_KEY'), file=sys.stderr)
                 print(image_url, file=sys.stderr)
+        
+        # get color from UNet model
         color_recommed = cloth_rec(user_contents)
-        # if user_contents['pattern']:
-        #     color_recommed = [(119, 60, 139), (207, 51, 109)]
-        # else:
-        #     color_recommed = [(46, 106, 176), (211, 223, 240)]
         for tup in zip(request.form.getlist('recommendation'), color_recommed):
             color_vecs[tup[0]] = tup[1]
         session['color'] = color_vecs
-
-        # the following return is for test only, please deleted after testing
-        # return f'''<!DOCTYPE html>
-        #             <html>
-        #             <body>
-        #             <h1>Number of Recommendations: {str(user_contents['num_recommendation'])}</h1>
-        #             <h1>Pattern: {str(user_contents['pattern'])}</h1>
-        #             <h1>Image File Content:</h1>
-        #             <p>{str(coat_image)[:10]}</p>
-        #             <p>{str(shirt_image)[:10]}</p>
-        #             <p>{str(trousers_image)[:10]}</p>
-        #             <p>{str(user_contents['urls'])}</p>
-        #             </body>
-        #             </html>'''
         return redirect(url_for('result_page'))
     return render_template('dynamic_tab.html')
 
-# @app.route('/logout')
-# @login_required
-# # logout page
-# def logout():
-#     before_logout = '<h1> Before logout - is_autheticated : ' \
-#                     + str(current_user.is_authenticated) + '</h1>'
-#     logout_user()
-#     after_logout = '<h1> After logout - is_autheticated : ' \
-#                    + str(current_user.is_authenticated) + '</h1>'
-#     return before_logout + after_logout
-#
+
+@app.route('/logout')
+@login_required
+# logout page
+def logout():
+    before_logout = '<h1> Before logout - is_autheticated : ' \
+                    + str(current_user.is_authenticated) + '</h1>'
+    logout_user()
+    after_logout = '<h1> After logout - is_autheticated : ' \
+                   + str(current_user.is_authenticated) + '</h1>'
+    return before_logout + after_logout
 
 
 @app.route('/result_page.html')
@@ -161,32 +141,6 @@ def dynamic_tab():
 def result_page():
     rgb_vecs = session['color']
     return render_template('result_page.html', vecs=rgb_vecs)
-
-
-# S3 (need fit)
-# sql_connection_string = os.environ["SQL_STRING"]
-bucket_name = os.getenv('AWS_BUCKET_NAME')
-s3 = boto3.client(
-    "s3",
-    aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
-    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
-)
-
-def upload_clothing_jpeg_to_s3(user_id, image_file, style):
-    ts = int(time.time())
-    filename = secure_filename(f"{user_id}_{ts}_{style}.jpeg")
-    try:
-        s3.put_object(Body=image_file,
-            Bucket=bucket_name,
-            Key=filename,
-            ContentType=request.mimetype)
-    except Exception as e:
-        print(f"Something Happened: {e}", file=sys.stderr)
-        return f'''<!DOCTYPE html><html><body><p>{str(e)}</p></body></html>'''
-    # after upload file to s3 bucket, return filename of the uploaded file
-    region = 'us-west-2'
-    url = f"https://{bucket_name}.s3.{region}.amazonaws.com/{filename}"
-    return url
 
 
 # Main area

@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from connection import test_connection
 from utils import get_yaml_file
 import os
+import boto3
 
 conn_url = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
@@ -30,3 +31,11 @@ test_connection(conn_url)
 
 # get yaml file
 team_members_yaml = get_yaml_file()
+
+# initialize S3 bucket
+bucket_name = os.getenv('AWS_BUCKET_NAME')
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+)
