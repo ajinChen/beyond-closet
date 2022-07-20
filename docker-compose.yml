@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    container_name: web_application
+    ports:
+      - "80:5000"
+    volumes:
+      - .:/code
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - SQLALCHEMY_DATABASE_URI=${sqlalchemy_database_uri}
+      - AWS_BUCKET_NAME=${aws_bucket_name} 
+      - AWS_ACCESS_KEY=${aws_access_key} 
+      - AWS_SECRET_ACCESS_KEY=${aws_secret_access_key} 
+  db:
+    image: postgres:14.2-alpine
+    container_name: postgres_db
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=${postgres_host_auth_method} 
+      - POSTGRES_DB=${postgres_db} 
+
+
+volumes:
+  postgres_data:

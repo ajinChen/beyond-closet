@@ -1,0 +1,6 @@
+sqlalchemy_database_uri='postgresql+psycopg2://postgres:postgres@postgres_db/postgres'
+aws_bucket_name='g3es'
+aws_access_key='none'
+aws_secret_access_key='none'
+postgres_host_auth_method='trust'
+postgres_db='postgres'
