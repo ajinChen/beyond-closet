@@ -1,18 +1,13 @@
 # data loader
 from __future__ import print_function, division
-import glob
 import torch
 from skimage import io, transform, color
 import numpy as np
 import random
-import math
-import matplotlib.pyplot as plt
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
-from PIL import Image
+from torch.utils.data import Dataset
 import sys
 
-#==========================dataset load==========================
+# ==========================dataset load==========================
 class RescaleT(object):
 
 	def __init__(self,output_size):
@@ -34,14 +29,11 @@ class RescaleT(object):
 
 		new_h, new_w = int(new_h), int(new_w)
 
-		# #resize the image to new_h x new_w and convert image from range [0,255] to [0,1]
-		# img = transform.resize(image,(new_h,new_w),mode='constant')
-		# lbl = transform.resize(label,(new_h,new_w),mode='constant', order=0, preserve_range=True)
-
 		img = transform.resize(image,(self.output_size,self.output_size),mode='constant')
 		lbl = transform.resize(label,(self.output_size,self.output_size),mode='constant', order=0, preserve_range=True)
 
 		return {'imidx':imidx, 'image':img,'label':lbl}
+
 
 class Rescale(object):
 
@@ -68,11 +60,12 @@ class Rescale(object):
 
 		new_h, new_w = int(new_h), int(new_w)
 
-		# #resize the image to new_h x new_w and convert image from range [0,255] to [0,1]
+		# resize the image to new_h x new_w and convert image from range [0,255] to [0,1]
 		img = transform.resize(image,(new_h,new_w),mode='constant')
 		lbl = transform.resize(label,(new_h,new_w),mode='constant', order=0, preserve_range=True)
 
 		return {'imidx':imidx, 'image':img,'label':lbl}
+
 
 class RandomCrop(object):
 
@@ -83,6 +76,7 @@ class RandomCrop(object):
 		else:
 			assert len(output_size) == 2
 			self.output_size = output_size
+
 	def __call__(self,sample):
 		imidx, image, label = sample['imidx'], sample['image'], sample['label']
 
@@ -100,6 +94,7 @@ class RandomCrop(object):
 		label = label[top: top + new_h, left: left + new_w]
 
 		return {'imidx':imidx,'image':image, 'label':label}
+
 
 class ToTensor(object):
 	"""Convert ndarrays in sample to Tensors."""
@@ -128,11 +123,11 @@ class ToTensor(object):
 
 		tmpLbl[:,:,0] = label[:,:,0]
 
-
 		tmpImg = tmpImg.transpose((2, 0, 1))
 		tmpLbl = label.transpose((2, 0, 1))
 
 		return {'imidx':torch.from_numpy(imidx), 'image': torch.from_numpy(tmpImg), 'label': torch.from_numpy(tmpLbl)}
+
 
 class ToTensorLab(object):
 	"""Convert ndarrays in sample to Tensors."""
@@ -192,7 +187,6 @@ class ToTensorLab(object):
 			tmpImg = color.rgb2lab(tmpImg)
 
 			# tmpImg = tmpImg/(np.max(tmpImg)-np.min(tmpImg))
-
 			tmpImg[:,:,0] = (tmpImg[:,:,0]-np.min(tmpImg[:,:,0]))/(np.max(tmpImg[:,:,0])-np.min(tmpImg[:,:,0]))
 			tmpImg[:,:,1] = (tmpImg[:,:,1]-np.min(tmpImg[:,:,1]))/(np.max(tmpImg[:,:,1])-np.min(tmpImg[:,:,1]))
 			tmpImg[:,:,2] = (tmpImg[:,:,2]-np.min(tmpImg[:,:,2]))/(np.max(tmpImg[:,:,2])-np.min(tmpImg[:,:,2]))
@@ -215,17 +209,13 @@ class ToTensorLab(object):
 
 		tmpLbl[:,:,0] = label[:,:,0]
 
-
 		tmpImg = tmpImg.transpose((2, 0, 1))
 		tmpLbl = label.transpose((2, 0, 1))
-
 		return {'imidx':torch.from_numpy(imidx), 'image': torch.from_numpy(tmpImg), 'label': torch.from_numpy(tmpLbl)}
+
 
 class SalObjDataset(Dataset):
 	def __init__(self,img_name_list,lbl_name_list,transform=None):
-		# self.root_dir = root_dir
-		# self.image_name_list = glob.glob(image_dir+'*.png')
-		# self.label_name_list = glob.glob(label_dir+'*.png')
 		self.image_name_list = img_name_list
 		self.label_name_list = lbl_name_list
 		self.transform = transform
@@ -234,13 +224,8 @@ class SalObjDataset(Dataset):
 		return len(self.image_name_list)
 
 	def __getitem__(self,idx):
-
-		# image = Image.open(self.image_name_list[idx])#io.imread(self.image_name_list[idx])
-		# label = Image.open(self.label_name_list[idx])#io.imread(self.label_name_list[idx])
-
 		print(self.image_name_list[idx], file=sys.stderr)
 		image = io.imread(self.image_name_list[idx])
-		imname = self.image_name_list[idx]
 		imidx = np.array([idx])
 
 		if(0==len(self.label_name_list)):
@@ -264,5 +249,4 @@ class SalObjDataset(Dataset):
 
 		if self.transform:
 			sample = self.transform(sample)
-
 		return sample
