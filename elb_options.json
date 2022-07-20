@@ -1,0 +1,37 @@
+[
+    {
+    "Namespace": "aws:autoscaling:launchconfiguration",
+    "OptionName": "IamInstanceProfile",
+    "Value": "aws-elasticbeanstalk-ec2-role"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "sqlalchemy_database_uri",
+    "Value": "postgresql+psycopg2://postgres:postgres@postgres_db/postgres"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "postgres_host_auth_method",
+    "Value": "trust"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "postgres_db",
+    "Value": "postgres"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "aws_bucket_name",
+    "Value": "group-user-images"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "aws_access_key",
+    "Value": "your_aws_access"
+    },
+    {
+    "Namespace": "aws:elasticbeanstalk:application:environment",
+    "OptionName": "aws_secret_access_key",
+    "Value": "your_aws_secret"
+    }
+]
