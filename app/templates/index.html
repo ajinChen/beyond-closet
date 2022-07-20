@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Beyond Closet</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" type= "text/css" href="static/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+		<script src="static/assets/js/breakpoints.min.js"></script>
+		<script src="static/assets/js/browser.min.js"></script>
+		<script src="static/assets/js/jquery.dropotron.min.js"></script>
+		<script src="static/assets/js/jquery.min.js"></script>
+		<script src="static/assets/js/jquery.scrollex.min.js"></script>
+		<script src="static/assets/js/jquery.scrolly.min.js"></script>
+		<script src="static/assets/js/main.js"></script>
+		<script src="static/assets/js/util.js"></script>
+	</head>
+	<body class="index is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1 id="logo"><a href="index.html">Beyond Closet<span> by USF MSDS G3</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="index.html">Homepage</a></li>
+							<li class="submenu">
+								<a>Company</a>
+								<ul>
+									<!-- <li><a href="left-sidebar.html">Left Sidebar</a></li> -->
+									<!-- <li><a href="right-sidebar.html">Right Sidebar</a></li> -->
+									<li><a href="about.html">Our Team</a></li>
+									<li><a href="about.html">Contact</a></li>
+									<li class="submenu">
+										<a>More</a>
+										<ul>
+											<li><a href="#">placeholder1</a></li>
+											<li><a href="#">placeholder2</a></li>
+											<li><a href="#">placeholder3</a></li>
+											<li><a href="#">placeholder4</a></li>
+											<li><a href="#">placeholder5</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							{% if authenticated_user %}
+							<li><a href="logout" class="button primary">Log Out</a></li>
+			        {% else %}
+							<li><a href="signIn.html" class="button primary">Sign In</a></li>
+			        <li><a href="signUp.html" class="button primary">Sign Up</a></li>
+			        {% endif %}
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+
+					<!--
+						".inner" is set up as an inline-block so it automatically expands
+						in both directions to fit whatever's inside it. This means it won't
+						automatically wrap lines, so be sure to use line breaks where
+						appropriate (<br />).
+					-->
+					<div class="inner">
+
+						<header>
+							<h2>Beyond Closet</h2>
+						</header>
+						<p>A SMART ASSISTANT TO HELP YOU
+						<br />
+						FIND THE BEST CLOTHING COMBOS</p>
+						<!-- <p>This is <strong>Twenty</strong>, a free
+						<br />
+						responsive template
+						<br />
+						by <a href="http://html5up.net">HTML5 UP</a>.</p> -->
+						<!-- <footer> -->
+							<!-- <ul class="buttons stacked">
+								<li><a href="#main" class="button fit scrolly">Tell Me More</a></li>
+							</ul> -->
+						<!-- </footer> -->
+
+					</div>
+
+				</section>
+
+			<!-- Main -->
+					<!-- One -->
+						<section class="wrapper style2 container special-alt">
+							<div class="row gtr-50">
+								<div class="col-8 col-12-narrower">
+
+									<header>
+										<h2>Only Need Three Minutes.</h2>
+									</header>
+									<p>You can become the next stylish star among your friends with our service. Upload your clothes, and let’s conquer the fashion.</p>
+									<footer>
+										<ul class="buttons">
+											<li><a href="dynamic_tab.html" class="button">Find Out More</a></li>
+										</ul>
+									</footer>
+
+								</div>
+								<div class="col-4 col-12-narrower imp-narrower">
+
+									<ul class="featured-icons">
+										<a href="#" class="image featured"><img src="static/hpimages/panel1-image.png" alt="" /></a>
+									</ul>
+
+								</div>
+							</div>
+						</section>
+
+					<!-- Two -->
+						<section class="wrapper style1 container special">
+							<div class="row">
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="static/hpimages/color_wheels.jpg" alt="" /></a>
+										<header>
+											<h3>Color Wheel</h3>
+										</header>
+										<p>A color wheel is a tool and a theorem to define colors and their relationships. It is the core insight for Beyond Closet’s recommendation.  </p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="static/hpimages/color_combos.jpg" alt="" /></a>
+										<header>
+											<h3>Color Combos</h3>
+										</header>
+										<p>Using Beyond Closet, you can quickly pick out color combinations that are complementary or analogous depending on the desired effect you want to achieve.</p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="static/hpimages/local_weather.jpg" alt="" /></a>
+										<header>
+											<h3>Local Weather</h3>
+										</header>
+										<p>We expect to provide sophisticated services for our premium users soon, such as considering the local weather for a better recommendation based on user properties.</p>
+									</section>
+
+								</div>
+							</div>
+						</section>
+
+					<!-- Three -->
+						<!-- <section class="wrapper style3 container special">
+
+							<header class="major">
+								<h2>Next look at this <strong>cool stuff</strong></h2>
+							</header>
+
+							<div class="row">
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+										<header>
+											<h3>A Really Fast Train</h3>
+										</header>
+										<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
+									</section>
+
+								</div>
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+										<header>
+											<h3>An Airport Terminal</h3>
+										</header>
+										<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
+									</section>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+										<header>
+											<h3>Hyperspace Travel</h3>
+										</header>
+										<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
+									</section>
+
+								</div>
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
+										<header>
+											<h3>And Another Train</h3>
+										</header>
+										<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper sed blandit lorem ipsum dolore.</p>
+									</section>
+
+								</div>
+							</div>
+
+							<footer class="major">
+								<ul class="buttons">
+									<li><a href="#" class="button">See More</a></li>
+								</ul>
+							</footer>
+
+						</section> -->
+
+				</article>
+
+			<!-- CTA -->
+				<section id="cta">
+
+					<header>
+						<h2>Any suggestions?</h2>
+						<p>Contribute your ideas and become our designer. </p>
+					</header>
+					<footer>
+						<ul class="buttons">
+							<li><a href="about.html" class="button primary">Contact us</a></li>
+							<!-- <li><a href="#" class="button">Explore fashion world</a></li> -->
+						</ul>
+					</footer>
+
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
+						<li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; Beyond Closet 2022</li>
+					</ul>
+
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/jquery.dropotron.min.js"></script>
+			<script src="static/assets/js/jquery.scrolly.min.js"></script>
+			<script src="static/assets/js/jquery.scrollex.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>

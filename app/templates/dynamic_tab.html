@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What You Want To Wear - Beyond Closet</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- functions -->
+<script>
+$(document).ready(function(){
+  // function for tab
+  $("#myTab a").click(function(e){
+    e.preventDefault();
+    $(this).tab("show");
+  });
+
+  // function for image upload
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+
+  // function for dropdown menu
+  $(".dropdown-menu li a").click(function(){
+    $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+    $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+  });
+
+  // function for next tab
+  $('.btnNext').click(function() {
+    $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+  });
+
+  // function for previous tab
+  $('.btnPrevious').click(function() {
+    $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+  });
+
+  // function for reload by click start a new project
+  $('.btnReload').click(function() {
+    window.location.reload();
+  });
+
+  // function for click to select
+  $('.btn-light').on("click",function(){
+    $(".btn-light").removeClass('btn-success');
+    $(this).addClass("btn-success");
+  });
+});
+</script>
+
+<!-- main part -->
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+  <section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+
+
+                <!-- main part of tab setting  -->
+                <div class="m-4">
+                    <ul class="nav nav-tabs nav-pills" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="start-tab" data-toggle="tab" href="#start" role="tab" aria-controls="home" aria-selected="true">Let's Get Started</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="imageupload-tab" data-toggle="tab" href="#imageupload" role="tab" aria-controls="profile" aria-selected="false">Choose Your Item</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="colorpattern-tab" data-toggle="tab" href="#colorpattern" role="tab" aria-controls="contact" aria-selected="false">Select Your Pattern</a>
+                      </li>
+                      <!--
+                      <li class="nav-item">
+                        <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="contact" aria-selected="false">Get Your Outfit</a>
+                      </li>
+                      -->
+                    </ul>
+
+                  <!-- content of tab -->
+                    <div class="tab-content" id="myTabContent">
+
+                      <!-- tab1: a container with two columns, one is the image, another contains another container-->
+                      <div class="tab-pane active in" id="start" role="tabpanel" aria-labelledby="start-tab">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <!-- First column of the largest container -->
+                            <div class="col-9">
+                              <!-- text here -->
+                              <h3 class="text-center">What do you want to wear today?</h3>
+                              <p class="text-center">Click the items and upload the images for those you want to wear.</p>
+                                <!-- several columns inside the first column of the container -->
+                                <div class="row align-items-center">
+
+                                  <!-- an empty column to make the 3 items centered -->
+                                  <div class="col-2"></div>
+
+                                  <!-- jacket -->
+                                  <div class="col-2">
+                                    <img id="myImg" src="static/dynamicimage/jacket.png" class="img-fluid" data-toggle="modal" data-target="#coatModal">
+                                    <!-- upload image modal -->
+                                    <div class="modal fade" id="coatModal" tabindex="-1" role="dialog" aria-labelledby="coatModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="coatModalLabel">Upload Jacket</h5>
+                                            <!--
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            -->
+                                          </div>
+                                          <div class="modal-body">
+                                            <label class="form-label" for="customFile">Upload a Picture of Your Jacket</label>
+                                              <input type="file" class="form-control" name="coat_image" id="coat_image" />
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                                              <!--<button type="button" class="btn btn-primary">-->
+                                                <!--<input type="submit">-->
+                                                <!--</button>&lt;!&ndash; Save image here, link to aws &ndash;&gt;-->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- jacke ends -->
+
+                                  <!-- an empty column to make the 3 items centered -->
+                                  <div class="col-1"></div>
+
+                                  <!-- t-shirt: same as jacket -->
+                                  <div class="col-2">
+                                    <img src="static/dynamicimage/tshirt.png" class="img-fluid" data-toggle="modal" data-target="#tshirtModal">
+                                    <!-- upload image modal -->
+                                    <div class="modal fade" id="tshirtModal" tabindex="-1" role="dialog" aria-labelledby="tshirtModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="tshirtModalLabel">Upload T-shirt</h5>
+                                            <!--
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            -->
+                                          </div>
+                                          <div class="modal-body">
+                                            <label class="form-label" for="customFile">Upload a Picture of Your T-shirt</label>
+                                              <input type="file" class="form-control" name="shirt_image" id="shirt_image"/>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>&lt;!&ndash; Save image here, link to aws &ndash;&gt;-->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- tshirt ends -->
+
+                                  <!-- an empty column to make the 3 items centered -->
+                                  <div class="col-1"></div>
+
+                                  <!-- trousers: same as jacket -->
+                                  <div class="col-2">
+                                    <img src="static/dynamicimage/trousers.png" class="img-fluid" data-toggle="modal" data-target="#trousersModal">
+                                    <!-- upload image modal -->
+                                    <div class="modal fade" id="trousersModal" tabindex="-1" role="dialog" aria-labelledby="trousersModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="trousersModalLabel">Upload Trousers</h5>
+                                            <!--
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            -->
+                                          </div>
+                                          <div class="modal-body">
+                                            <label class="form-label" for="customFile">Upload a Picture of Your Trousers</label>
+                                              <input type="file" class="form-control" name="trousers_image"  id="trousers_image"/>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button> &lt;!&ndash; Save image here, link to aws &ndash;&gt;-->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- trousers ends -->
+
+                                </div>
+                            </div>
+
+                            <!-- second column of the largest container, just image on the right side -->
+                            <div class="col-3 d-flex align-items-center order-1 order-lg-2">
+                               <img src="static/dynamicimage/choose_you_want.png" class="img-fluid" style="width: 320px; height: 400px">
+                            </div>
+                          </div>
+
+                          <!-- the button for previous and next tab -->
+                          <div class="w-100"></div>
+                            <div class="col">
+                              <div class="input-group mb-3 group-end">
+                                <a class="btn btn-primary btnNext">Next</a>
+                              </div>
+                            </div>
+                        </div>
+                        <!--/. form element wrap -->
+                      </div>
+
+                      <!-- tab2: a container with two columns, one is the image, another contains another container-->
+                      <div class="tab-pane fade" id="imageupload" role="tabpanel" aria-labelledby="imageupload-tab">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-9">
+                              <h3 class="text-center">Let us know which items you want us to recommend?</h3>
+                              <p class="text-center">Click the items below to get recommendations.</p>
+                                <div class="row align-items-center">
+                                  <div class="col-2"></div>
+
+                                  <!-- jacket -->
+                                  <div class="col-2">
+                                    <img src="static/dynamicimage/jacket.png" class="img-fluid">
+                                    <!-- click to make the gray button green as selected -->
+                                    <!-- <button type="button" class="btn btn-light">
+                                      Recommend on Coat
+                                    </button> -->
+                                    <div class="form-check form-switch form-switch-lg">
+                                      <input class="form-check-input" type="checkbox" name="recommendation" value="coat">
+                                      <label class="form-check-label" for="flexSwitchCheckDefault">Recommend</label>
+                                    </div>
+                                  </div>
+
+                                  <!-- empty -->
+                                  <div class="col-1"></div>
+
+                                  <!-- tshirt -->
+                                  <div class="col-2">
+                                    <img src="static/dynamicimage/tshirt.png" class="img-fluid">
+                                    <!-- click to make the gray button green as selected -->
+                                    <!-- <button type="button" class="btn btn-light">
+                                      Recommend on T-shirt
+                                    </button> -->
+                                    <div class="form-check form-switch form-switch-lg">
+                                      <input class="form-check-input" type="checkbox" name="recommendation" value="shirt">
+                                      <label class="form-check-label" for="flexSwitchCheckDefault">Recommend</label>
+                                    </div>
+                                  </div>
+
+                                  <!-- empty -->
+                                  <div class="col-1"></div>
+
+                                  <!-- trousers -->
+                                  <div class="col-2">
+                                    <div class="text-center">
+                                    <img src="static/dynamicimage/trousers.png" class="img-fluid">
+                                    </div>
+                                    <!-- click to make the gray button green as selected -->
+                                    <!-- <button type="button" class="btn btn-light">
+                                      Recommend on Trousers
+                                    </button> -->
+
+                                    <div class="form-check form-switch form-switch-lg">
+                                      <input class="form-check-input" type="checkbox" name="recommendation" value="trousers">
+                                      <label class="form-check-label" for="flexSwitchCheckDefault">Recommend</label>
+                                    </div>
+                                  </div>
+
+                                  <!-- <div class="col-1"></div> -->
+
+                                </div>
+                            </div>
+
+                            <!-- second column in side, picture for decoration -->
+                            <div class="col-3">
+                               <img src="static/dynamicimage/pick.png" class="img-fluid" style="width: 320px; height: 400px">
+                            </div>
+                          </div>
+
+                          <!-- previous and next button -->
+                          <div class="w-100"></div>
+                            <div class="col">
+                              <div class="input-group mb-3 group-end">
+                                <a class="btn btn-danger btnPrevious">Previous</a>
+                                <a class="btn btn-primary btnNext">Next</a>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <!-- tab 3 -->
+                      <div class="tab-pane fade" id="colorpattern" role="tabpanel" aria-labelledby="colorpattern-tab">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-9">
+                              <h3 class="text-center">Choose Your Style</h3>
+                              <p>&nbsp&nbsp</p>
+                                <div class="row align-items-center">
+                                    <div class="col-2"></div>
+
+                                    <div class="col-2">
+                                      <!-- Drop down for analogous or Complementary -->
+                                      <div class="dropdown">
+                                        <button class="btn btn-default" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                          Select Your Pattern
+                                          <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                          <li><a href="#" data-value="action"><div class="text-center">Analogous</div><img src="static/dynamicimage/ana.png" class="img-responsive img-rounded"></a></li>
+                                          <li><a href="#" data-value="another action"><div class="text-center">Complementary</div><img src="static/dynamicimage/comple.png" class="img-responsive img-rounded"></a></li>
+                                        </ul>
+
+                                      </div>
+<!--                                        <select name="pattern">-->
+<!--                                          <option value="analogous">Analogous</option>-->
+<!--                                          <option value="complementary">Complementary</option>-->
+<!--                                        </select>-->
+                                    </div>
+
+                                    <div class="col-1"></div>
+
+                                    <!-- color combos, works like in tab 2 -->
+                                    <div class="col-2">
+                                      <img src="static/dynamicimage/colorcombos.jpg" class="img-fluid">
+                                      <button type="button" class="btn btn-light">
+                                        Color Combos
+                                      </button>
+                                    </div>
+
+                                    <div class="col-1"></div>
+
+                                    <!-- ignore weather, disabled -->
+                                    <div class="col-2">
+                                      <img src="static/dynamicimage/Ignore_weather.jpg" class="img-fluid">
+                                      <button type="button" class="btn btn-secondary disabled">
+                                        Include Weather
+                                      </button>
+                                    </div>
+
+                                    <div class="col-1"></div>
+                                  </div>
+
+                                </div>
+
+                                <div class="col-3 d-flex align-items-center order-1 order-lg-2">
+                                    <img src="static/dynamicimage/smart_lady.png" class="img-fluid" style="width: 320px; height: 400px">
+                                </div>
+                          </div>
+
+
+
+                          <!-- previous and next button -->
+                          <div class="w-100"></div>
+                            <div class="col">
+                              <div class="input-group mb-3 group-end">
+                                <a class="btn btn-danger btnPrevious">Previous</a>
+                                <input type="submit" class="btn btn-success btnNext">
+<!--                                <a href="result_page.html" class="btn btn-success btnNext">Submit</a>-->
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+
+
+
+                      <!-- tab 4 -->
+                      <!--
+                      <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-md-8">
+                              <h4 class="text-center">Your Recommended Color Today</h4>
+                                <div class="row align-items-center">
+                      -->
+
+                                  <!-- shows the color recommended, please change the rgb bellow -->
+                                  <!-- now it is a slim rectangular as a col ('col-sm-10'), can make a container with square column to show better -->
+                      <!--
+                                  <div class="col-sm-10">
+                                    <div style="background-color: rgb(37, 190, 147);">.</div>
+                                  </div>
+                                </div>
+                            </div>
+                      -->
+
+                            <!-- decoration image -->
+                      <!--
+                            <div class="col-6 col-md-4">
+                               <img src="static/dynamicimage/smart_lady.jpg" class="img-fluid">
+                            </div>
+                          </div>
+                      -->
+
+                          <!-- buttons at the bottom -->
+                      <!--
+                          <div class="input-group mb-3 group-end">
+                            <a class="btn btn-danger btnPrevious">Previous</a>
+                            <a class="btn btn-primary btnReload">Start Another One</a>
+                      -->
+                            <!-- finished button, ask for suggestions: input text -->
+                              <!--<button type="button" class="btn btn-success" data-toggle="modal" data-target="#finishModal">
+                                Finished
+                              </button>-->
+                            <!-- Modal -->
+                      <!--
+                            <div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="finishModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="finishModalLabel">Please leave some message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="form-outline">
+                                      <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                                      <label class="form-label" for="textAreaExample">Tell us how do you like our recommendations.</label>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success">Finish</button>
+                      -->
+                                    <!-- Save text here, link to aws -->
+                      <!--
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      -->
+
+                      </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</form>
+</body>
+</html>
