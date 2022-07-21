@@ -39,7 +39,7 @@ docker-compose down
 
 * Object Segmentation (UNet)
 
-* Color Detection (KMeans++)
+* Color Detection (Kmeans++)
 
 * Color Wheel Theorem (Projecting to spherical color space)
 
