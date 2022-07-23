@@ -27,7 +27,7 @@ To launch the container services of app, run the following:
 # launch application
 docker-compose build && docker-compose --env-file env_file up
 
-# shut down application
+# shut-down application
 docker-compose down
 ```
 
